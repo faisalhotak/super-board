@@ -1,0 +1,120 @@
+.Login {
+    width: 100%;
+    height: 100%;
+    background-color: #F8F3FF;
+    font-family: 'Verdana', 'sans-serif';
+}
+
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 42px;
+    color: #343A40;
+    font-family: 'Verdana', 'sans-serif';
+}
+
+.username-box {
+    box-sizing: border-box;
+    width: 458px;
+    height: 66px;
+    background: #FFFFFF;
+    border: 2px solid #E4E4E4;
+    border-radius: 2px;
+    padding-left: 15px;
+    margin: 10px;
+    color: #9A9A9A;
+    font-family: 'Verdana', 'sans-serif';
+}
+
+.password-box {
+    box-sizing: border-box;
+    width: 458px;
+    height: 66px;
+    background: #FFFFFF;
+    border: 2px solid #E4E4E4;
+    border-radius: 2px;
+    padding-left: 15px;
+    margin: 10px;
+    color: #E4E4E4;
+    font-family: 'Verdana', 'sans-serif';
+}
+
+.row {
+    margin: 10px;
+    display: flex;
+    position: relative;
+}
+
+.rememberme-text {
+    font-family: 'Verdana', 'sans-serif';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    margin-left: 10px;
+    color: #9A9A9A;
+}
+
+.forgot-text {
+    font-family: 'Verdana', 'sans-serif';
+    font-style: normal;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 16px;
+    position: absolute;
+    right: 0;
+    color: #8221FE;
+}
+
+.login-button {
+    width: 458px;
+    height: 66px;
+    background: linear-gradient(180deg, #8221FE 0%, #4E00B1 100%);
+    box-shadow: 0 4px 4px rgba(89, 7, 193, 0.28);
+    border-radius: 2px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 17px;
+    text-align: center;
+    margin: 10px;
+    color: #FFFFFF;
+    font-family: 'Verdana', 'sans-serif';
+}
+
+.login-button:hover {
+    cursor: pointer;
+    background: linear-gradient(180deg, #8221FE 0%, #6626b6 100%);
+}
+
+.separator {
+    margin-top: 50px;
+    width: 100%;
+    border-bottom: 2px solid #EBEBEB;
+    height: 10px;
+    text-align: center;
+}
+
+.separator-text {
+    font-family: 'Verdana', 'sans-serif';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #97999C;
+    background-color: #F3F5F6;
+    padding: 0 20px;
+}
+
+.auth-icons {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.icon {
+    padding: 10px;
+}
