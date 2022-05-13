@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 // import logo from './logo.svg';
 import './App.css';
 // import { ToastContainer, toast } from 'react-toastify';
@@ -19,13 +19,13 @@ function App() {
     <div className="App">
         {/*<header className="App-header">*/}
         {/*<img src={logo} className="App-logo" alt="logo" />*/}
-        <BrowserRouter>
+        <Router>
             <Routes>
                 <Route path="/" element={<AuthRoute><Topbar/><Sidebar/><Board/></AuthRoute>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
             </Routes>
-        </BrowserRouter>
+        </Router>
         {/*</header>*/}
     </div>
   );
