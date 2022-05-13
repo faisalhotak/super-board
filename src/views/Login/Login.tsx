@@ -92,9 +92,9 @@ const Login = () => {
                     <button type="submit" className="login-button" disabled={loading}>{loading ? <div className="loader" /> : "Log in"}</button>
                     <div className="separator"><span className="separator-text">Or</span></div>
                     <div className="auth-icons">
-                        <img src="./assets/icons/icon_google.svg" alt="Google OAuth" className="icon" style={{cursor: "pointer"}} onClick={signInWithGoogle}/>
-                        <img src="./assets/icons/icon_facebook.svg" alt="Facebook OAuth" className="icon" style={{cursor: "pointer"}} onClick={signInWithFacebook}/>
-                        <img src="./assets/icons/icon_github.svg" alt="Github OAuth" className="icon" style={{cursor: "pointer"}} onClick={signInWithGithub}/>
+                        <img src="./assets/icons/icon_google.svg" alt="Google OAuth" className="oauth-icon" onClick={signInWithGoogle}/>
+                        <img src="./assets/icons/icon_facebook.svg" alt="Facebook OAuth" className="oauth-icon" onClick={signInWithFacebook}/>
+                        <img src="./assets/icons/icon_github.svg" alt="Github OAuth" className="oauth-icon" onClick={signInWithGithub}/>
                     </div>
                     <div style={{marginTop: 100}}>
                         Don't have an account yet ?

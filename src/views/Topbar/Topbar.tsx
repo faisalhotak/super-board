@@ -25,16 +25,13 @@ function Topbar() {
             <a href="https://faisalhotak.github.io/super-board"><FaFlipboard /> Super Board</a>
             <a href="/"><FaTable /> Espaces de travail</a>
             <a href="/"><FaPlusSquare /> Créer</a>
-            <a href="/"><FaSearch /></a>
-            <a href="/"><FaInfoCircle /></a>
-            <a href="/"><FaBell /></a>
-            <a href="/">Profil</a>
-            <a onClick={logout} style={{cursor: 'pointer'}}>Sign out</a>
-
-            {/*<Link to="/">*/}
-            {/*    <span className="material-icons">home</span>*/}
-            {/*</Link>*/}
-
+            {/*<a href="/"><FaSearch /></a>*/}
+            {/*<a href="/"><FaInfoCircle /></a>*/}
+            {/*<a href="/"><FaBell /></a>*/}
+            <a onClick={logout} className="logoout-button">
+                <img src="./assets/icons/avatar.svg" alt="Avatar" className="icon" onClick={() => console.log('profile')}/>
+                <div className="logout">LOGOUT</div>
+            </a>
         </div>
     );
 }

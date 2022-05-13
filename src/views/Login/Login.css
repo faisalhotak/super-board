@@ -120,8 +120,9 @@
     margin-top: 40px;
 }
 
-.icon {
+.oauth-icon {
     padding: 10px;
+    cursor: pointer;
 }
 
 .sign-up {

@@ -11,6 +11,7 @@ const AuthRoute = (props: { children: any; }) => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (!user) navigate('/login');
+            else navigate('/');
 
             setLoading(false);
         })
@@ -18,6 +19,7 @@ const AuthRoute = (props: { children: any; }) => {
         return () => {
             onAuthStateChanged(auth, (user) => {
                 if (!user) navigate('/login');
+                else navigate('/');
 
                 setLoading(false);
             })

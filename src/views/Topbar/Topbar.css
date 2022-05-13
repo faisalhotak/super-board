@@ -4,21 +4,60 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: #FAF5FF;
     overflow-x: hidden;
     display: flex;
     justify-content: space-evenly;
-    padding: 20px;
+    align-items: center;
 }
 
 .Topbar a {
     padding: 6px 6px 6px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
-    display: block;
+    /*display: block;*/
 }
 
 .Topbar a:hover {
     color: #f1f1f1;
 }
+
+.icon {
+    cursor: pointer;
+    width: 45px;
+    border-radius: 50px;
+    float: left;
+}
+
+.logout {
+    font-size: .8em;
+    font-family: 'Oswald', sans-serif;
+    overflow: hidden;
+    letter-spacing: 3px;
+    opacity: 0;
+    transition: opacity 0.50s;
+    -webkit-transition: opacity 0.50s;
+    cursor: pointer;
+}
+
+.logoout-button {
+    display: flex;
+    align-items: center;
+    width: 50px;
+    color: red;
+    background-color: #FAF5FF;
+    transition: width .35s;
+    -webkit-transition: width .35s;
+    overflow: hidden;
+}
+
+.logoout-button:hover {
+    width: 200px;
+    display: flex;
+}
+
+.logoout-button:hover .logout{
+    opacity: 1;
+    color: red;
+}
+
