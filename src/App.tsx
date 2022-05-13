@@ -1,8 +1,6 @@
-import React, {useCallback, useState} from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
-// import logo from './logo.svg';
+import React from 'react';
+import {Route, Routes} from 'react-router-dom';
 import './App.css';
-// import { ToastContainer, toast } from 'react-toastify';
 import Sidebar from "./views/Sidebar/Sidebar";
 import Topbar from "./views/Topbar/Topbar";
 import Board from "./views/Board/Board";
@@ -17,14 +15,11 @@ initializeApp(config.firebaseConfig);
 function App() {
   return (
     <div className="App">
-        {/*<header className="App-header">*/}
-        {/*<img src={logo} className="App-logo" alt="logo" />*/}
         <Routes>
             <Route path="/" element={<AuthRoute><Topbar/><Sidebar/><Board/></AuthRoute>} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
         </Routes>
-        {/*</header>*/}
     </div>
   );
 }
