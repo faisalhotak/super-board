@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/super-board/static/css/main.58e61917.css",
+    "main.js": "/super-board/static/js/main.472d9f30.js",
+    "index.html": "/super-board/index.html",
+    "main.58e61917.css.map": "/super-board/static/css/main.58e61917.css.map",
+    "main.472d9f30.js.map": "/super-board/static/js/main.472d9f30.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.58e61917.css",
+    "static/js/main.472d9f30.js"
+  ]
+}
