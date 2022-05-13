@@ -1,4 +1,4 @@
-.Login {
+.SignUp {
     width: 100%;
     height: 100%;
     background-color: #F8F3FF;
@@ -11,14 +11,13 @@
     align-items: center;
 }
 
-
 .form {
     text-align: center;
     width: 100%;
     max-width: 500px;
 }
 
-.login-title {
+.signup-title {
     font-style: normal;
     font-weight: 700;
     font-size: 42px;
@@ -53,33 +52,7 @@
     font-family: 'Verdana', 'sans-serif';
 }
 
-.row {
-    margin: 10px 0 10px 0;
-    display: flex;
-    position: relative;
-}
-
-.rememberme-text {
-    font-family: 'Verdana', 'sans-serif';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    margin-left: 10px;
-    color: #9A9A9A;
-}
-
-.forgot-text {
-    font-family: 'Verdana', 'sans-serif';
-    font-style: normal;
-    text-decoration: none;
-    font-weight: 400;
-    font-size: 16px;
-    position: absolute;
-    right: 0;
-    color: #8221FE;
-}
-
-.login-button {
+.signup-button {
     width: 100%;
     height: 66px;
     background: linear-gradient(180deg, #8221FE 0%, #4E00B1 100%);
@@ -94,7 +67,7 @@
     font-family: 'Verdana', 'sans-serif';
 }
 
-.login-button:hover {
+.signup-button:hover {
     cursor: pointer;
     background: linear-gradient(180deg, #8221FE 0%, #6626b6 100%);
 }
@@ -124,7 +97,7 @@
     padding: 10px;
 }
 
-.sign-up {
+.login {
     margin-left: 10px;
     cursor: pointer;
     color: #8221FE;

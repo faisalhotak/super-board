@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Firebase config
-firebaseConfig.tsx
+src/config/config.tsx
 
 # IDEA Folder
 .idea

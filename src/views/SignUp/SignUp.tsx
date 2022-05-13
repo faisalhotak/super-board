@@ -1,11 +1,12 @@
 import React, {ChangeEvent, Dispatch, FormEvent, SetStateAction, useEffect, useState} from 'react';
-import './Login.css';
+import './SignUp.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {getAuth, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, signInWithEmailAndPassword, signInWithPopup} from 'firebase/auth';
+import {getAuth, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword} from 'firebase/auth';
 import {useNavigate} from "react-router-dom";
+import firebase from "firebase/compat";
 
-const Login = () => {
+const SignUp = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const auth = getAuth();
@@ -23,7 +24,7 @@ const Login = () => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true);
-        await signInWithEmailAndPassword(auth, username, password)
+        await createUserWithEmailAndPassword(auth, username, password)
             .then(() => navigate('/'))
             .catch((error) => {
                 console.log('error:', error.code);
@@ -78,18 +79,13 @@ const Login = () => {
     }
 
     return (
-        <div className="Login">
+        <div className="SignUp">
             <div className="login-wrapper">
                 <form onSubmit={handleSubmit} className="form">
-                    <p className="login-title">Login</p>
+                    <p className="signup-title">Sign up</p>
                     <div><input type="email" required onChange={onChangeUsername} className="username-box" placeholder="Email Address *" /></div>
                     <div><input type="password" minLength={6} required onChange={onChangePassword} className="password-box" placeholder="Password *" /></div>
-                    <div className="row">
-                        <input type="checkbox" />
-                        <span className="rememberme-text">Remember me</span>
-                        <a href="#" className="forgot-text">Forgot?</a>
-                    </div>
-                    <button type="submit" className="login-button" disabled={loading}>{loading ? <div className="loader" /> : "Log in"}</button>
+                    <button type="submit" className="signup-button" disabled={loading}>{loading ? <div className="loader" /> : "Sign up"}</button>
                     <div className="separator"><span className="separator-text">Or</span></div>
                     <div className="auth-icons">
                         <img src="./assets/icons/icon_google.svg" alt="Google OAuth" className="icon" style={{cursor: "pointer"}} onClick={signInWithGoogle}/>
@@ -97,8 +93,8 @@ const Login = () => {
                         <img src="./assets/icons/icon_github.svg" alt="Github OAuth" className="icon" style={{cursor: "pointer"}} onClick={signInWithGithub}/>
                     </div>
                     <div style={{marginTop: 100}}>
-                        Don't have an account yet ?
-                        <a className="sign-up" onClick={() => navigate('/signup')}>Sign up</a>
+                        Already a user ?
+                        <a className="login" onClick={() => navigate('/login')}>Login</a>
                     </div>
                 </form>
             </div>
@@ -107,4 +103,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUp;
