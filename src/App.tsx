@@ -19,13 +19,11 @@ function App() {
     <div className="App">
         {/*<header className="App-header">*/}
         {/*<img src={logo} className="App-logo" alt="logo" />*/}
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
-            <Routes>
-                <Route path="/" element={<AuthRoute><Topbar/><Sidebar/><Board/></AuthRoute>} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-            </Routes>
-        </BrowserRouter>
+        <Routes>
+            <Route path="/" element={<AuthRoute><Topbar/><Sidebar/><Board/></AuthRoute>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+        </Routes>
         {/*</header>*/}
     </div>
   );
