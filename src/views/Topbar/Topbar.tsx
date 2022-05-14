@@ -28,7 +28,7 @@ function Topbar() {
             {/*<a href="/"><FaSearch /></a>*/}
             {/*<a href="/"><FaInfoCircle /></a>*/}
             {/*<a href="/"><FaBell /></a>*/}
-            <a onClick={logout} className="logoout-button">
+            <a onClick={logout} className="logout-button">
                 <img src="./assets/icons/avatar.svg" alt="Avatar" className="icon" onClick={() => console.log('profile')}/>
                 <div className="logout">LOGOUT</div>
             </a>

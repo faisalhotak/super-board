@@ -40,7 +40,7 @@
     cursor: pointer;
 }
 
-.logoout-button {
+.logout-button {
     display: flex;
     align-items: center;
     width: 50px;
@@ -49,14 +49,15 @@
     transition: width .35s;
     -webkit-transition: width .35s;
     overflow: hidden;
+    cursor: pointer;
 }
 
-.logoout-button:hover {
+.logout-button:hover {
     width: 200px;
     display: flex;
 }
 
-.logoout-button:hover .logout{
+.logout-button:hover .logout{
     opacity: 1;
     color: red;
 }
