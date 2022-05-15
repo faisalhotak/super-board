@@ -1,6 +1,10 @@
 .Board {
+    background-color: white;
+    display: flex;
+    height: 100%;
+    overflow: scroll;
     margin-left: 200px;
-    margin-top: 90px;
+    margin-top: 80px;
 }
 
 .card {
@@ -8,6 +12,8 @@
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     padding: 10px;
+    margin: 10px;
+    background-color: #FAF5FF;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -18,4 +24,5 @@
 /* Add some padding inside the card container */
 .container {
     padding: 2px 16px;
+    width: 200px;
 }

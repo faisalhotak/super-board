@@ -12,7 +12,7 @@ import SignUp from "./views/SignUp/SignUp";
 
 initializeApp(config.firebaseConfig);
 
-function App() {
+const App = () => {
   return (
     <div className="App">
         <Routes>
