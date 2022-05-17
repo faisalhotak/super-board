@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {getAuth, onAuthStateChanged} from 'firebase/auth';
 import {useNavigate} from "react-router-dom";
-import {toast} from "react-toastify";
 
-const AuthRoute = (props: { children: any; }) => {
+const AuthRoutes = (props: { children: any; }) => {
     const { children } = props;
     const auth = getAuth();
     const navigate = useNavigate();
@@ -38,4 +37,4 @@ const AuthRoute = (props: { children: any; }) => {
     return <>{children}</>;
 }
 
-export default AuthRoute;
+export default AuthRoutes;

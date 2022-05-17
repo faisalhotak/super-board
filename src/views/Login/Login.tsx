@@ -1,4 +1,4 @@
-import React, {ChangeEvent, Dispatch, FormEvent, SetStateAction, useEffect, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useState} from 'react';
 import './Login.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,7 +26,7 @@ const Login = () => {
         await signInWithEmailAndPassword(auth, username, password)
             .then(() => {
                 navigate('/');
-                toast.success('Successfully logged in !');
+                toastSuccessLogin();
             })
             .catch((error) => {
                 console.log('error:', error.code);
@@ -58,7 +58,7 @@ const Login = () => {
         setLoading(true);
 
         signInWithPopup(auth, new FacebookAuthProvider())
-            .then((response) => {
+            .then(() => {
                 navigate('/');
                 toastSuccessLogin();
             })
@@ -73,7 +73,7 @@ const Login = () => {
         setLoading(true);
 
         signInWithPopup(auth, new GithubAuthProvider())
-            .then((response) => {
+            .then(() => {
                 navigate('/');
                 toastSuccessLogin();
             })

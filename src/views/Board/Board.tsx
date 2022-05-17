@@ -1,58 +1,47 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './Board.css';
 import {FaInfo} from "react-icons/fa";
 import {toast} from "react-toastify";
+import {getAuth} from "firebase/auth";
+import {collection, getDocs} from "firebase/firestore";
+import {db} from "../../App";
+
+const USERS_BOARDS_COLLECTION = "users_boards";
+const BOARDS_COLLECTION = "boards";
+const COLUMNS_COLLECTION = "columns";
 
 const Board = () => {
+    const userId: string|undefined = getAuth().currentUser?.uid || '';
+    const [columns, setColumns]= useState<string[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            const columnsCollection = collection(db, USERS_BOARDS_COLLECTION, userId, BOARDS_COLLECTION, "pQtcX6P8bNtoiyB45rD8", COLUMNS_COLLECTION);
+            const columnsDocs = await getDocs(columnsCollection);
+            const columnsList = columnsDocs.docs.map(doc => doc.data().title);
+
+            setColumns(columnsList);
+        })();
+
+        return () => {
+            setColumns([]);
+        }
+    }, []);
 
     return (
         <div className="Board">
-            <div className="card">
-                {/*<img src="" alt="Avatar" style={{width: '100%'}} />*/}
-                <div className="container">
-                    <h4><b>Backlog</b></h4>
-                    <p>To define</p>
-                </div>
-            </div>
-            <div className="card">
-                {/*<img src="" alt="Avatar" style={{width: '100%'}}/>*/}
-                <div className="container">
-                    <h4><b>To Do</b></h4>
-                    <p>New feature !</p>
-                </div>
-            </div>
-            <div className="card">
-                {/*<img src="" alt="Avatar" style={{width: '100%'}} />*/}
-                <div className="container">
-                    <h4><b>Doing</b></h4>
-                    <p>Feature in progress !</p>
-                </div>
-            </div>
-            <div className="card">
-                {/*<img src="" alt="Avatar" style={{width: '100%'}} />*/}
-                <div className="container">
-                    <h4><b>To be deployed</b></h4>
-                    <p>Feature needs to be deployed !</p>
-                </div>
-            </div>
-            <div className="card">
-                {/*<img src="" alt="Avatar" style={{width: '100%'}} />*/}
-                <div className="container">
-                    <h4><b>To be tested</b></h4>
-                    <p>Feature to be tested !</p>
-                </div>
-            </div>
-            <div className="card">
-                {/*<img src="" alt="Avatar" style={{width: '100%'}} />*/}
-                <div className="container">
-                    <h4><b>In Production</b></h4>
-                    <p>Feature deployed successfully in production !</p>
-                </div>
-            </div>
-
-            {/*<Link to="/">*/}
-            {/*    <span className="material-icons">home</span>*/}
-            {/*</Link>*/}
+            {columns.map((column, index) => {
+                return (
+                    <div className="column" key={index}>
+                        {/*<img src="" alt="Avatar" style={{width: '100%'}} />*/}
+                        <div className="container">
+                            <h4><b>{column}</b></h4>
+                            <p>To define</p>
+                        </div>
+                    </div>
+                )
+            })}
+            <button className="new-column-button">+ New column</button>
         </div>
     );
 }

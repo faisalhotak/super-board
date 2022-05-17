@@ -7,7 +7,7 @@
     margin-top: 80px;
 }
 
-.card {
+.column {
     /* Add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
@@ -17,7 +17,7 @@
 }
 
 /* On mouse-over, add a deeper shadow */
-.card:hover {
+.column:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
@@ -25,4 +25,11 @@
 .container {
     padding: 2px 16px;
     width: 200px;
+}
+
+.new-column-button {
+    padding: 10px;
+    margin: 10px;
+    transition: 0.3s;
+    font-size: 2em;
 }

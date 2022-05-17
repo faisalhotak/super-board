@@ -1,0 +1,13 @@
+.subfolders {
+    list-style: none;
+}
+
+.subfolders a {
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.new-board-button {
+    display: flex;
+    margin: 0 auto 0 auto;
+}
