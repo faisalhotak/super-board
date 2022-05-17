@@ -61,12 +61,13 @@ const BoardsLinks = () => {
         <div className="boards-wrapper">
             {/* Add New Board Modal */}
             <ReactModal
-                style={{content: {margin: '25% 25% 25% 25%', height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}}
+                style={{content: {margin: '25% 25% 25% 25%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}}
                 portalClassName="modal"
                 isOpen={isAddNewBoardOpen}
                 appElement={document.getElementById('root') as HTMLElement}
                 onRequestClose={() => setIsAddNewBoardOpen(false)}
             >
+                <p>Enter the new board title</p>
                 <input value={newBoardTitle} type="text" onChange={handleNewBoardTitleChange}/>
                 <div style={{display: 'flex', justifyContent: 'space-between', width: 150}}>
                     <button onClick={addNewBoard}>Add</button>
