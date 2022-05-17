@@ -9,6 +9,7 @@ import { config } from "./config/config";
 import { initializeApp } from 'firebase/app';
 import AuthRoute from "./components/AuthRoute";
 import SignUp from "./views/SignUp/SignUp";
+import {ToastContainer} from "react-toastify";
 
 initializeApp(config.firebaseConfig);
 
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/signup" element={<AuthRoute><SignUp/></AuthRoute>} />
             {/*<Route path="*" element={<AuthRoute><Topbar/><Sidebar/><Board/></AuthRoute>} />*/}
         </Routes>
+        <ToastContainer position="bottom-center" autoClose={3000} pauseOnFocusLoss={false} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 .Topbar {
     width: 100%;
     position: fixed;
-    z-index: 1;
+    /*z-index: 1;*/
     top: 0;
     left: 0;
     background-color: #FAF5FF;
@@ -31,7 +31,6 @@
 
 .logout {
     font-size: .8em;
-    font-family: 'Oswald', sans-serif;
     overflow: hidden;
     letter-spacing: 3px;
     color: red;
@@ -42,33 +41,16 @@
 }
 
 .logout-button {
-    display: flex;
-    align-items: center;
-    width: 50px;
-    color: red;
-    background-color: #FAF5FF;
-    transition: width .35s;
-    -webkit-transition: width .35s;
-    overflow: hidden;
+    color: #ffd3d3;
+    padding: 10px;
+    background-color: rgb(236, 54, 24);
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    margin: 15px;
 }
 
 .logout-button:hover {
-    width: 200px;
-    display: flex;
+    background-color: rgb(255, 90, 63);
+    cursor: pointer;
 }
-
-.logout-button:hover .logout{
-    opacity: 1;
-    color: red;
-}
-
-.modal {
-    top: 50%;
-    left: 50%;
-    right: auto;
-    bottom: auto;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-}
-

@@ -1,6 +1,6 @@
 import React, {ChangeEvent, Dispatch, FormEvent, SetStateAction, useEffect, useState} from 'react';
 import './Login.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {getAuth, GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, signInWithEmailAndPassword, signInWithPopup} from 'firebase/auth';
 import {useNavigate} from "react-router-dom";
@@ -24,7 +24,10 @@ const Login = () => {
         event.preventDefault();
         setLoading(true);
         await signInWithEmailAndPassword(auth, username, password)
-            .then(() => navigate('/'))
+            .then(() => {
+                navigate('/');
+                toast.success('Successfully logged in !');
+            })
             .catch((error) => {
                 console.log('error:', error.code);
                 toast.error(error.code)
@@ -32,13 +35,17 @@ const Login = () => {
         setLoading(false);
     }
 
+    const toastSuccessLogin = () => {
+        toast.success('Successfully logged in !');
+    }
+
     const signInWithGoogle = () => {
         setLoading(true);
 
         signInWithPopup(auth, new GoogleAuthProvider())
-            .then((response) => {
-                console.log('response:', response);
+            .then(() => {
                 navigate('/');
+                toastSuccessLogin();
             })
             .catch((error) => {
                 console.log('error:', error.code);
@@ -52,8 +59,8 @@ const Login = () => {
 
         signInWithPopup(auth, new FacebookAuthProvider())
             .then((response) => {
-                console.log('response:', response);
                 navigate('/');
+                toastSuccessLogin();
             })
             .catch((error) => {
                 console.log('error:', error.code);
@@ -67,8 +74,8 @@ const Login = () => {
 
         signInWithPopup(auth, new GithubAuthProvider())
             .then((response) => {
-                console.log('response:', response);
                 navigate('/');
+                toastSuccessLogin();
             })
             .catch((error) => {
                 console.log('error:', error.code);
@@ -96,13 +103,12 @@ const Login = () => {
                         <img src="./assets/icons/icon_facebook.svg" alt="Facebook OAuth" className="oauth-icon" onClick={signInWithFacebook}/>
                         <img src="./assets/icons/icon_github.svg" alt="Github OAuth" className="oauth-icon" onClick={signInWithGithub}/>
                     </div>
-                    <div style={{marginTop: 100}}>
+                    <div>
                         Don't have an account yet ?
                         <a className="sign-up" onClick={() => navigate('/signup')}>Sign up</a>
                     </div>
                 </form>
             </div>
-            <ToastContainer position="bottom-center" autoClose={3000} pauseOnFocusLoss={false} />
         </div>
     );
 };

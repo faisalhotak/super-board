@@ -1,5 +1,6 @@
 .App {
   height: 100%;
+  font-family: 'Varela Round', sans-serif;
 }
 
 @media (prefers-reduced-motion: no-preference) {

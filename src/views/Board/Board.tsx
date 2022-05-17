@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import './Board.css';
 import {FaInfo} from "react-icons/fa";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 const Board = () => {
 
@@ -53,7 +53,6 @@ const Board = () => {
             {/*<Link to="/">*/}
             {/*    <span className="material-icons">home</span>*/}
             {/*</Link>*/}
-            <ToastContainer />
         </div>
     );
 }

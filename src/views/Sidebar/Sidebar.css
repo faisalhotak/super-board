@@ -1,6 +1,6 @@
 .Sidebar {
     position: fixed;
-    z-index: 1;
+    /*z-index: 1;*/
     top: 70px;
     left: 0;
     background-color: #FAF5FF;

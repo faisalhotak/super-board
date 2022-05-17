@@ -2,7 +2,6 @@
     width: 100%;
     height: 100%;
     background-color: #F8F3FF;
-    font-family: 'Verdana', 'sans-serif';
 }
 
 .login-wrapper {
@@ -22,8 +21,7 @@
     font-weight: 700;
     font-size: 42px;
     color: #343A40;
-    font-family: 'Verdana', 'sans-serif';
-    margin-bottom: 80px;
+    margin-bottom: 40px;
 }
 
 .username-box {
@@ -36,7 +34,6 @@
     padding-left: 15px;
     margin: 10px 0 10px 0;
     color: #9A9A9A;
-    font-family: 'Verdana', 'sans-serif';
 }
 
 .password-box {
@@ -49,7 +46,6 @@
     padding-left: 15px;
     margin: 10px 0 10px 0;
     color: #E4E4E4;
-    font-family: 'Verdana', 'sans-serif';
 }
 
 .signup-button {
@@ -64,7 +60,6 @@
     line-height: 17px;
     margin: 10px 0 10px 0;
     color: #FFFFFF;
-    font-family: 'Verdana', 'sans-serif';
 }
 
 .signup-button:hover {
@@ -80,7 +75,6 @@
 }
 
 .separator-text {
-    font-family: 'Verdana', 'sans-serif';
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -91,6 +85,12 @@
 
 .auth-icons {
     margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.oauth-icon {
+    padding: 10px;
+    cursor: pointer;
 }
 
 .icon {
