@@ -11,11 +11,3 @@
     display: flex;
     margin: 0 auto 0 auto;
 }
-
-.selected-board {
-    background-color: white;
-    border-width: 0;
-    border-radius: 20px;
-
-    /*color: red;*/
-}

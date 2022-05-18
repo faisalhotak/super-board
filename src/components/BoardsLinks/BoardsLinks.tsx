@@ -5,7 +5,7 @@ import { doc, setDoc, getDocs, deleteDoc, collection, serverTimestamp, FieldValu
 import { getAuth } from 'firebase/auth';
 import ReactModal from "react-modal";
 import {toast} from "react-toastify";
-import {FaMinusCircle} from "react-icons/fa";
+import {FaArrowAltCircleLeft, FaArrowAltCircleRight, FaMinusCircle, FaRegArrowAltCircleRight} from "react-icons/fa";
 import {BoardContext} from "../../contexts/BoardContext";
 
 const USERS_COLLECTION = "users";
@@ -135,8 +135,9 @@ const BoardsLinks = () => {
             </ReactModal>
 
             <ul className="subfolders">
-                {boards.map((board, index) => <li style={{display: "flex", justifyContent: 'space-between'}} key={index}>
-                    <a className={selectedBoard === board.id ? "selected-board" : ""} onClick={() => selectBoard(board.id)}>{board.title}</a>
+                {boards.map((board, index) => <li style={{display: "flex", justifyContent: 'space-evenly', alignItems: 'center'}} key={index}>
+                    <div>{selectedBoard === board.id && <FaRegArrowAltCircleRight/>}</div>
+                    <a onClick={() => selectBoard(board.id)}>{board.title}</a>
                     <button onClick={() => requestDeleteBoard(board)}><FaMinusCircle color="red" /></button>
                 </li>)}
             </ul>

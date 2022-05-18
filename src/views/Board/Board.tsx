@@ -6,7 +6,7 @@ import {collection, deleteDoc, doc, FieldValue, getDocs, serverTimestamp, setDoc
 import {db} from "../../App";
 import { BoardContext } from "../../contexts/BoardContext";
 import ReactModal from "react-modal";
-import {FaMinusCircle} from "react-icons/fa";
+import {FaMinusCircle, FaPlusCircle, FaPlusSquare} from "react-icons/fa";
 
 const USERS_COLLECTION = "users";
 const BOARDS_COLLECTION = "boards";
@@ -152,7 +152,7 @@ const Board = () => {
                         </div>
                         )
                     })}
-                    <button className="new-column-button" onClick={requestAddNewColumn}>+ New column</button>
+                    <button className="new-column-button" onClick={requestAddNewColumn}><FaPlusSquare /> New column</button>
                 </>
                 :
                 <h1 style={{marginLeft: '10%'}}>Select a board on your left or create a new one !</h1>

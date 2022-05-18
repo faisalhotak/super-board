@@ -28,8 +28,15 @@
 }
 
 .new-column-button {
-    padding: 10px;
-    margin: 10px;
     transition: 0.3s;
     font-size: 2em;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 10px;
+    margin: 10px;
+    border-width: 0;
+    background-color: #FAF5FF;
+}
+
+.new-column-button:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
