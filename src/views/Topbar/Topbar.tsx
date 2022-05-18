@@ -36,8 +36,7 @@ const Topbar = () => {
         <div className="Topbar">
             {/* Logout Modal*/}
             <ReactModal
-                style={{content: {margin: '25% 25% 25% 25%', height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}}
-                portalClassName="modal"
+                style={{content: {margin: '20% 25% 25% 25%', height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}}
                 isOpen={isModalOpen}
                 appElement={document.getElementById('root') as HTMLElement}
                 onRequestClose={closeModal}
