@@ -14,6 +14,7 @@
     padding: 10px;
     margin: 10px;
     background-color: #FAF5FF;
+    height: 80%;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -25,7 +26,7 @@
 .container {
     padding: 2px 16px;
     width: 200px;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
 }
 

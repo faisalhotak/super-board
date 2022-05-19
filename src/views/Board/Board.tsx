@@ -429,8 +429,8 @@ const Board = () => {
                                         </div>
                                     </div>)
                                 })}
-                                <button className="new-card-button" onClick={() => requestAddNewCard(column)}><FaPlusSquare /><br/> New card</button>
                             </div>
+                            <button className="new-card-button" onClick={() => requestAddNewCard(column)}><FaPlusSquare /><br/> New card</button>
                         </div>
                         )
                     })}
