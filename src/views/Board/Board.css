@@ -3,7 +3,7 @@
     display: flex;
     height: 100%;
     overflow: scroll;
-    margin-left: 200px;
+    margin-left: 280px;
     margin-top: 80px;
 }
 
@@ -25,18 +25,46 @@
 .container {
     padding: 2px 16px;
     width: 200px;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 .new-column-button {
     transition: 0.3s;
-    font-size: 2em;
+    font-size: 1.5em;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    padding: 10px;
-    margin: 10px;
+    padding: 50px;
+    margin: 10px 10px 10px 10px;
     border-width: 0;
     background-color: #FAF5FF;
+    justify-content: center;
 }
 
 .new-column-button:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.new-card-button {
+    display: block;
+    transition: 0.3s;
+    font-size: 1em;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 20px;
+    margin: 20px auto 10px auto;
+    border-width: 0;
+    background-color: #FAF5FF;
+    justify-content: center;
+}
+
+.new-card-button:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.card {
+    transition: 0.3s;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    /*width: 100%;*/
+    height: 200px;
+    padding: 20px;
+    margin: 10px auto 10px auto;
 }

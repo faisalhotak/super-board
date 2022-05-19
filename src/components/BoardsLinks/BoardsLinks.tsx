@@ -1,31 +1,41 @@
 import React, {ChangeEvent, useContext, useEffect, useState} from 'react';
 import { db } from "../../App";
 import "./BoardsLinks.css";
-import { doc, setDoc, getDocs, deleteDoc, collection, serverTimestamp, FieldValue } from "firebase/firestore";
+import { doc, setDoc, getDocs, updateDoc, collection, serverTimestamp, FieldValue, writeBatch } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import ReactModal from "react-modal";
 import {toast} from "react-toastify";
-import {FaArrowAltCircleLeft, FaArrowAltCircleRight, FaMinusCircle, FaRegArrowAltCircleRight} from "react-icons/fa";
+import {
+    FaMinusCircle,
+    FaPen,
+    FaRegArrowAltCircleRight
+} from "react-icons/fa";
 import {BoardContext} from "../../contexts/BoardContext";
 
 const USERS_COLLECTION = "users";
 const BOARDS_COLLECTION = "boards";
+const COLUMNS_COLLECTION = "columns";
 
 type boardObject = {
-    createdAt: FieldValue,
-    id: string,
-    title: string,
+    createdAt: FieldValue
+    id: string
+    title: string
     userId: string
 }
 
 const BoardsLinks = () => {
     const userId = getAuth().currentUser?.uid || '';
     const [boards, setBoards] = useState<boardObject[]>([]);
-    const [isAddNewBoardOpen, setIsAddNewBoardOpen] = useState(false);
-    const [isDeleteBoardOpen, setIsDeleteBoardOpen] = useState(false);
-    const [newBoardTitle, setNewBoardTitle] = useState('');
     const {selectedBoard, setSelectedBoard} = useContext(BoardContext);
+
+    const [newBoardTitle, setNewBoardTitle] = useState('');
+    const [isAddNewBoardOpen, setIsAddNewBoardOpen] = useState(false);
+
     const [boardToDelete, setBoardToDelete] = useState<boardObject>();
+    const [isDeleteBoardOpen, setIsDeleteBoardOpen] = useState(false);
+
+    const [boardToEdit, setBoardToEdit] = useState<boardObject>();
+    const [isEditBoardOpen, setIsEditBoardOpen] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -48,8 +58,23 @@ const BoardsLinks = () => {
         setNewBoardTitle(event.target.value);
     }
 
+    const handleEditBoardTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        if (!boardToEdit) {
+            toast.error('Board is not editable !');
+            setIsEditBoardOpen(false);
+            return;
+        }
+
+        setBoardToEdit({...boardToEdit, title: event.target.value});
+    }
+
     const requestAddNewBoard = () => {
         setIsAddNewBoardOpen(true);
+    }
+
+    const requestEditBoard = (board: boardObject) => {
+        setBoardToEdit(board);
+        setIsEditBoardOpen(true);
     }
 
     const requestDeleteBoard = (board: boardObject) => {
@@ -79,18 +104,48 @@ const BoardsLinks = () => {
             })
     }
 
+    const editBoard = async () => {
+        if (!boardToEdit) {
+            toast.error('This board cannot be edited !');
+            return;
+        }
+
+        const boardDocument = doc(db, USERS_COLLECTION, userId, BOARDS_COLLECTION, boardToEdit.id);
+
+        await updateDoc(boardDocument, {title: boardToEdit.title})
+            .then(() => {
+                setBoards([...boards.map(board => board.id === boardToEdit.id ? boardToEdit : board)]);
+                toast.success(`${boardToEdit.title} edited with success !`);
+                selectBoard(boardToEdit.id);
+                setIsEditBoardOpen(false);
+            })
+            .catch((error) => {
+                toast.error('Failed to edit the board !');
+                console.log('error:', error);
+            })
+    }
+
     const deleteBoard = async () => {
         if (!boardToDelete) {
             toast.error('This board cannot be deleted !');
             return;
         }
 
+        const batch = writeBatch(db);
+
         const boardDocument = doc(db, USERS_COLLECTION, userId, BOARDS_COLLECTION, boardToDelete.id);
 
-        await deleteDoc(boardDocument)
-            .then((response) => {
+        const boardColumnsCollectionRef = collection(db, USERS_COLLECTION, userId, BOARDS_COLLECTION, boardToDelete.id, COLUMNS_COLLECTION);
+        const snapshot = await getDocs(boardColumnsCollectionRef);
+
+        snapshot.docs.forEach(doc => batch.delete(doc.ref));
+        batch.delete(boardDocument);
+
+        await batch.commit()
+            .then(() => {
                 setBoards([...boards.filter(board => board.id !== boardToDelete.id)]);
                 toast.success(`${boardToDelete.title} deleted with success !`);
+                selectBoard('');
                 setIsDeleteBoardOpen(false);
             })
             .catch((error) => {
@@ -120,6 +175,21 @@ const BoardsLinks = () => {
                 </div>
             </ReactModal>
 
+            {/* Edit Board Modal */}
+            <ReactModal
+                style={{content: {margin: '20% 25% 25% 25%', height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}}
+                isOpen={isEditBoardOpen}
+                appElement={document.getElementById('root') as HTMLElement}
+                onRequestClose={() => setIsEditBoardOpen(false)}
+            >
+                <p>Edit board title</p>
+                <input value={boardToEdit?.title} type="text" onChange={handleEditBoardTitleChange} />
+                <div style={{display: 'flex', justifyContent: 'space-between', width: 150}}>
+                    <button onClick={editBoard}>Edit</button>
+                    <button onClick={() => setIsEditBoardOpen(false)}>Cancel</button>
+                </div>
+            </ReactModal>
+
             {/* Delete Board Modal */}
             <ReactModal
                 style={{content: {margin: '20% 25% 25% 25%', height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'}}}
@@ -135,10 +205,13 @@ const BoardsLinks = () => {
             </ReactModal>
 
             <ul className="subfolders">
-                {boards.map((board, index) => <li style={{display: "flex", justifyContent: 'space-evenly', alignItems: 'center'}} key={index}>
-                    <div>{selectedBoard === board.id && <FaRegArrowAltCircleRight/>}</div>
+                {boards.map((board, index) => <li key={index}>
+                    <span>{selectedBoard === board.id && <FaRegArrowAltCircleRight/>}</span>
                     <a onClick={() => selectBoard(board.id)}>{board.title}</a>
-                    <button onClick={() => requestDeleteBoard(board)}><FaMinusCircle color="red" /></button>
+                    <div>
+                        <button onClick={() => requestEditBoard(board)}><FaPen color="grey" /></button>
+                        <button onClick={() => requestDeleteBoard(board)}><FaMinusCircle color="red" /></button>
+                    </div>
                 </li>)}
             </ul>
             {/* New Board Button */}
