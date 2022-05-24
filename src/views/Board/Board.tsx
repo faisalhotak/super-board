@@ -89,7 +89,7 @@ const Board = () => {
                 snapshotArrays.map(snapArray => {
                     return snapArray.docs.map(snap => {
                         const data = snap.data();
-                        const cardObject: cardObject = {createdAt: data.createdId, id: data.id, content: data.content, userId: data.userId, columnId: data.columnId};
+                        const cardObject: cardObject = {createdAt: data.createdAt, id: data.id, content: data.content, userId: data.userId, columnId: data.columnId};
                         const column = columnsList.find(column => column.id === cardObject.columnId);
 
                         if (!column) {
@@ -118,7 +118,11 @@ const Board = () => {
     const onDragEnd = async (result: DropResult) => {
         const {source, destination, draggableId} = result;
 
+        console.log('source:', source);
+        console.log('destination:', destination);
         if (!destination) return;
+
+        if (source.droppableId === destination.droppableId) return;
 
         const items = Array.from(columns);
         const draggedItem: cardObject | undefined = items[parseInt(source.droppableId)].cards.find(card => card.id === draggableId);
@@ -464,7 +468,7 @@ const Board = () => {
                                         </div>
                                         <Droppable droppableId={index.toString()}>
                                             {(provided) => (
-                                                <div key={index} {...provided.droppableProps} ref={provided.innerRef}>
+                                                <div key={index} {...provided.droppableProps} ref={provided.innerRef} className="dropzone">
                                                     <div className="container">
                                                         {column.cards.map((card, cardIndex) => {
                                                             return (

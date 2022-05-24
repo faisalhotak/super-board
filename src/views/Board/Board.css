@@ -15,7 +15,6 @@
     margin: 10px;
     background-color: #FAF5FF;
     height: 80%;
-    overflow-y: auto;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -26,9 +25,9 @@
 /* Add some padding inside the card container */
 .container {
     padding: 2px 16px;
-    width: 200px;
+    width: 250px;
     overflow-y: auto;
-    height: 100%;
+    height: 90%;
 }
 
 .new-column-button {
@@ -69,4 +68,8 @@
     height: 200px;
     padding: 20px;
     margin: 10px auto 10px auto;
+}
+
+.dropzone {
+    height: 100%;
 }
