@@ -219,10 +219,10 @@ const Board = () => {
 
         const userColumnsCollection = collection(db, USERS_COLLECTION, userId, BOARDS_COLLECTION, selectedBoard, COLUMNS_COLLECTION);
         const columnDocument = doc(userColumnsCollection);
-        const newObject = {title: newColumnTitle, id: columnDocument.id, createdAt: serverTimestamp(), userId: userId, cards: []};
+        const newObject = {title: newColumnTitle, id: columnDocument.id, createdAt: serverTimestamp(), userId: userId};
         await setDoc(columnDocument, newObject)
             .then(() => {
-                setColumns([...columns, newObject]);
+                setColumns([...columns, {...newObject, cards: []}]);
                 toast.success(`${newColumnTitle} added successfully !`);
                 setIsAddNewColumnOpen(false);
             })
