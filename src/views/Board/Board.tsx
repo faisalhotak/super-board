@@ -11,12 +11,13 @@ import {
     serverTimestamp,
     setDoc,
     QuerySnapshot,
-    updateDoc,
+    updateDoc, orderBy, query, writeBatch
 } from "firebase/firestore";
 import {db} from "../../App";
 import { BoardContext } from "../../contexts/BoardContext";
 import ReactModal from "react-modal";
 import {FaMinusCircle, FaPen, FaPlusSquare} from "react-icons/fa";
+import {DragDropContext, Draggable, Droppable, DropResult} from "react-beautiful-dnd";
 
 const USERS_COLLECTION = "users";
 const BOARDS_COLLECTION = "boards";
@@ -70,13 +71,15 @@ const Board = () => {
             if (selectedBoard) {
                 setLoading(true);
                 const columnsCollection = collection(db, USERS_COLLECTION, userId, BOARDS_COLLECTION, selectedBoard, COLUMNS_COLLECTION);
-                const columnsDocs = await getDocs(columnsCollection);
+                const columnsQuery = query(columnsCollection, orderBy("createdAt"));
+                const columnsDocs = await getDocs(columnsQuery);
                 const promises: Promise<QuerySnapshot>[] = [];
 
                 const columnsList = columnsDocs.docs.map(doc => {
                     const data = doc.data();
                     const cardsCollection = collection(db, USERS_COLLECTION, userId, BOARDS_COLLECTION, selectedBoard, COLUMNS_COLLECTION, doc.id, CARDS_COLLECTION);
-                    promises.push(getDocs(cardsCollection));
+                    const cardsQuery = query(cardsCollection, orderBy("createdAt"));
+                    promises.push(getDocs(cardsQuery));
                     const columnObject: columnObject = {title: data.title, id: doc.id, userId: data.userId, createdAt: data.createdAt, cards: []};
 
                     return columnObject;
@@ -111,6 +114,43 @@ const Board = () => {
     }, [selectedBoard]);
 
     if (loading) return <div className="Board"><div className="loader" style={{marginTop: 50}}/></div>;
+
+    const onDragEnd = async (result: DropResult) => {
+        const {source, destination, draggableId} = result;
+
+        if (!destination) return;
+
+        const items = Array.from(columns);
+        const draggedItem: cardObject | undefined = items[parseInt(source.droppableId)].cards.find(card => card.id === draggableId);
+        const destinationItem = items[parseInt(destination.droppableId)];
+
+        if (!draggedItem || !destinationItem) {
+            toast.error('Error dragging the card !');
+            return;
+        }
+
+        const oldCardId = draggedItem.id;
+        const oldColumnId = draggedItem.columnId;
+        draggedItem.columnId = destinationItem.id;
+
+        items[parseInt(source.droppableId)].cards.splice(source.index, 1);
+        items[parseInt(destination.droppableId)].cards.splice(destination.index, 0, draggedItem);
+
+        const batch = writeBatch(db);
+        const draggedDocument = doc(collection(db, USERS_COLLECTION, userId, BOARDS_COLLECTION, selectedBoard, COLUMNS_COLLECTION, destinationItem.id, CARDS_COLLECTION));
+        draggedItem.id = draggedDocument.id;
+        const oldCardDocument = doc(db, USERS_COLLECTION, userId, BOARDS_COLLECTION, selectedBoard, COLUMNS_COLLECTION, oldColumnId, CARDS_COLLECTION, oldCardId);
+
+        batch.set(draggedDocument, {createdAt: draggedItem.createdAt || "", content: draggedItem.content, userId: draggedItem.userId, columnId: destinationItem.id, id: draggedDocument.id});
+        batch.delete(oldCardDocument);
+
+        await batch.commit()
+            .then(() => {
+                setColumns(items);
+                toast.success("Card successfully dragged !");
+            })
+            .catch(() => toast.error("Error while dragging the card !"));
+    }
 
     const requestAddNewColumn = () => {
         setIsAddNewColumnOpen(true);
@@ -260,7 +300,7 @@ const Board = () => {
             })
     }
 
-    const editCard= async () => {
+    const editCard = async () => {
         if (!selectedColumn) {
             toast.error('Column could not be found !');
             return;
@@ -407,35 +447,53 @@ const Board = () => {
             </ReactModal>
 
             {selectedBoard ?
-                <>
-                    {columns.map((column, index) => {
-                        return (
-                        <div className="column" key={index}>
-                            {/*<img src="" alt="Avatar" style={{width: '100%'}} />*/}
-                            <div className="container">
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                                    <h4><b>{column.title}</b></h4>
-                                    <div>
-                                        <button onClick={() => requestEditColumn(column)}><FaPen color="grey" /></button>
-                                        <button onClick={() => requestDeleteColumn(column)}><FaMinusCircle color="red" /></button>
-                                    </div>
-                                </div>
-                                {column.cards.map((card, cardIndex) => {
-                                    return (<div className="card" style={{position: "relative"}} key={cardIndex}>
-                                        <p>{card.content}</p>
-                                        <div style={{position: "absolute", bottom: 0, right: 0}}>
-                                            <button onClick={() => requestEditCard(card, column)}><FaPen color="grey" /></button>
-                                            <button onClick={() => requestDeleteCard(card, column)}><FaMinusCircle color="red" /></button>
+                <div style={{display: "flex"}}>
+                    {/* Board columns */}
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <div style={{display: "flex"}}>
+                        {columns.map((column, index) => {
+                            return (
+                                <div key={index}>
+                                    <div className="column">
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                                            <h4><b>{column.title}</b></h4>
+                                            <div>
+                                                <button onClick={() => requestEditColumn(column)}><FaPen color="grey" /></button>
+                                                <button onClick={() => requestDeleteColumn(column)}><FaMinusCircle color="red" /></button>
+                                            </div>
                                         </div>
-                                    </div>)
-                                })}
-                            </div>
-                            <button className="new-card-button" onClick={() => requestAddNewCard(column)}><FaPlusSquare /><br/> New card</button>
-                        </div>
-                        )
-                    })}
-                    <button className="new-column-button" onClick={requestAddNewColumn}><FaPlusSquare /><br/> New column</button>
-                </>
+                                        <Droppable droppableId={index.toString()}>
+                                            {(provided) => (
+                                                <div key={index} {...provided.droppableProps} ref={provided.innerRef}>
+                                                    <div className="container">
+                                                        {column.cards.map((card, cardIndex) => {
+                                                            return (
+                                                                <Draggable key={card.id} draggableId={card.id} index={cardIndex}>
+                                                                    {(provided) => (
+                                                                        <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className='card' >
+                                                                            <span>{card.content}</span>
+                                                                            <div>
+                                                                                <button onClick={() => requestEditCard(card, column)}><FaPen color="grey" /></button>
+                                                                                <button onClick={() => requestDeleteCard(card, column)}><FaMinusCircle color="red" /></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    )}
+                                                                </Draggable>
+                                                            )
+                                                        })}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Droppable>
+                                    </div>
+                                    <button className="new-card-button" onClick={() => requestAddNewCard(column)}><FaPlusSquare /><br/> New card</button>
+                                </div>
+                            )
+                        })}
+                        <button className="new-column-button" onClick={requestAddNewColumn}><FaPlusSquare /><br/> New column</button>
+                    </div>
+                    </DragDropContext>
+                </div>
                 :
                 <h1 style={{marginLeft: '10%'}}>Select a board on your left or create a new one !</h1>
             }

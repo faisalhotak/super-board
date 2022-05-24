@@ -24,3 +24,8 @@
     display: flex;
     margin: 0 auto 0 auto;
 }
+
+.selected-board {
+    background-color: white;
+    border-radius: 10px;
+}

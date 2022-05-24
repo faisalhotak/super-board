@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useContext, useEffect, useState} from 'react';
 import { db } from "../../App";
 import "./BoardsLinks.css";
-import { doc, setDoc, getDocs, updateDoc, collection, serverTimestamp, FieldValue, writeBatch } from "firebase/firestore";
+import { doc, setDoc, getDocs, updateDoc, collection, serverTimestamp, FieldValue, writeBatch, orderBy, query } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import ReactModal from "react-modal";
 import {toast} from "react-toastify";
@@ -40,7 +40,9 @@ const BoardsLinks = () => {
     useEffect(() => {
         (async () => {
             const boardsCollection = collection(db, USERS_COLLECTION, userId, BOARDS_COLLECTION);
-            const boardsDocs = await getDocs(boardsCollection);
+            // const boardsDocs = await getDocs(boardsCollection);
+            const boardsQuery = query(boardsCollection, orderBy("createdAt"));
+            const boardsDocs = await getDocs(boardsQuery);
             const boardsList = boardsDocs.docs.map(doc => {
                 const data = doc.data();
                 return {title: data.title, id: doc.id, userId: data.userId, createdAt: data.createdAt};
@@ -205,7 +207,7 @@ const BoardsLinks = () => {
             </ReactModal>
 
             <ul className="subfolders">
-                {boards.map((board, index) => <li key={index}>
+                {boards.map((board, index) => <li key={index} className={selectedBoard === board.id ? "selected-board" : ""}>
                     <span>{selectedBoard === board.id && <FaRegArrowAltCircleRight/>}</span>
                     <a onClick={() => selectBoard(board.id)}>{board.title}</a>
                     <div>

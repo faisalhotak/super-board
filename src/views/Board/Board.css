@@ -15,6 +15,7 @@
     margin: 10px;
     background-color: #FAF5FF;
     height: 80%;
+    overflow-y: auto;
 }
 
 /* On mouse-over, add a deeper shadow */
